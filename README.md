@@ -6,7 +6,7 @@ I used javascript,html, css.
 
 DEVELOPER: AhmetTalhaTURKMEN
 
-GOAL: Dont be touch to hedgehog.IT'S THAT SIMPLE
+GOAL: Don't touch to hedgehog.IT'S THAT SIMPLE
 
 TRY IT HERE:http://tankgameproject.eu5.org/
 

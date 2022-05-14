@@ -10,6 +10,8 @@ GOAL: Don't touch to hedgehog.IT'S THAT SIMPLE
 
 TRY IT HERE:http://tankgameproject.eu5.org/
 
+If you want to try it on your local web, download index.html and the file in the link.
+
 Download project file here:https://bit.ly/3FRL1BN
 
 EXAMPLE PHOTO:

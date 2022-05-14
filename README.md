@@ -2,6 +2,8 @@
 
 This project is coded for Web Programming lesson.
 
+GOAL: Dont be touch to hedgehog.IT'S THAT SIMPLE
+
 Download project file here:https://bit.ly/3FRL1BN
 
 TRY IT HERE:http://tankgameproject.eu5.org/

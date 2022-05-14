@@ -1,0 +1,299 @@
+<html>
+    
+    <head>
+        <title>Tank Game</title>
+        <link rel="icon" href="image/tank_symbol.webp" type = "image/x-icon">
+        <style>
+            canvas { 
+                height: 94vh; 
+                width: 98vw;
+            }
+            button{
+                background-color: darkorange;
+                border:none;
+            }
+            .hide {
+                display: none;
+            }
+            .controls {
+
+                display: flex;
+
+                justify-content: center;
+
+                align-items: center;
+ 
+            }
+            *{
+                color: white;  
+            }
+            .k1{
+                font-size: 100;
+            }
+        </style>
+    </head>
+
+    <body>
+        
+        <canvas id="canvas" width="1920" height="1080"
+        style="margin: 0;
+        padding: 0; "></canvas>
+        
+        <div class="controls">
+
+
+        <button id="control-btn"style="margin:2px;">TIPS</button>    
+        <button onClick="history.go(0);"style="margin:2px;">RESTART</button>
+        <button id="start-btn" class="start-btn btn"style="width: 100%;height: 100%; position: absolute; top:0px; left:0px; background: url(image/start.gif);background-size:100% 100%;background-repeat: no-repeat;"></button>
+        <button id="stopAnimating"style="margin:2px;">STOP</button>
+        <button id="conAnimating"style="margin:2px;">CONTINUE</button>
+        <button id="pauseMusic">MUTE</button>
+        </div>
+        <script>
+            a=50;
+            b=500;
+                
+            x=1000;
+            y=0;
+            
+            var key=0;
+
+            var score = 0;
+            const startButton = document.getElementById('start-btn');
+            startButton.addEventListener('click', startGame);
+
+            const controlButton = document.getElementById('control-btn');
+
+            const pauseMusic = document.getElementById('pauseMusic');
+            
+            function startGame(){
+            controlButton.addEventListener('click', controlTips);
+            pauseMusic.addEventListener('click', musicPause);
+            startButton.classList.add('hide')
+            var canvas = document.getElementById("canvas");
+            var ctx=canvas.getContext("2d"); 
+            
+            var continueAnimating=true; 
+            var continueAnimating2=true;
+           
+            rndInt_bot_y = Math.floor(Math.random() * 150)+600;
+            rndInt_bot_x = Math.floor(Math.random() * 200)+400;
+            rndInt_top_y = Math.floor(Math.random() * 30);
+            rndInt_top_x = Math.floor(Math.random() *0);
+
+            green_tank=new Image();
+            hedgehog_top=new Image();
+            hedgehog_bot=new Image();
+            background = new Image();
+            exp_1=new Image();
+            exp_2=new Image();
+            exp_3=new Image();
+            exp_4=new Image();
+            exp_5=new Image();
+
+            main_music=new Audio();
+            fail=new Audio();
+            explosion=new Audio();
+
+            main_music.src="music/main_music.mp3";
+            fail.src="music/fail.mp3";
+            explosion.src="music/explosion.mp3";
+            main_music.play();
+            main_music.volume=0.1;
+            explosion.volume=0.5;
+            background.src="image/highway.png";
+            hedgehog_top.src="image/hedgehog.png";
+            hedgehog_bot.src="image/hedgehog.png";
+            green_tank.src="image/green_big_cannon.png";
+            exp_1.src="image/explosion_1.png";
+            exp_2.src="image/explosion_2.png";
+            exp_3.src="image/explosion_3.png";
+            exp_4.src="image/explosion_4.png";
+            exp_5.src="image/explosion_5.png";
+            background.onload = function(){
+                ctx.drawImage(background,0,0);   
+            }
+            
+            green_tank.onload=function(){
+                ctx.drawImage(green_tank,a,b);
+                ctx.drawImage(hedgehog_top,x,y);
+                ctx.drawImage(hedgehog_bot,x,y);
+            }  
+            document.onkeydown=function(e)
+            {
+            pos=1;
+            
+            key=window.event?e.keyCode:e.which;
+            }
+            document.onkeyup=function(e){}
+            
+            setInterval(function()
+            {
+                if(!continueAnimating){return;}
+                if(!continueAnimating2){return;}
+            var i=1;
+            ctx.clearRect(0,0, canvas.width, canvas.height); 
+            
+            
+
+            function loop_hedgehog(){
+                setTimeout(function() {
+                    i++;
+                    if(i<10){
+                        x--;
+                    }
+                    score++;
+                },5)
+            }
+            loop_hedgehog();
+            
+            document.getElementById('stopAnimating').addEventListener('click',function(){
+            continueAnimating=false;
+            main_music.pause();
+            });
+            document.getElementById('conAnimating').addEventListener('click',function(){
+            continueAnimating=true;
+            main_music.play();
+            });
+            if(x+800==0){x=1900}
+            if(x==1900||x==-600){
+                if(score<=15000){
+                    rndInt_bot_y = Math.floor(Math.random() * 150)+600;
+                    rndInt_bot_x = Math.floor(Math.random() * 200)+400;
+                    rndInt_top_y = Math.floor(Math.random() * 30);
+                    rndInt_top_x = Math.floor(Math.random() *0);
+                }
+                else if(15000<score<=30000){
+                rndInt_bot_y = Math.floor(Math.random() * 150)+550;
+                rndInt_bot_x = Math.floor(Math.random() * 50)+250;
+                rndInt_top_y = Math.floor(Math.random() * 30)+50;
+                rndInt_top_x = Math.floor(Math.random() * 100);
+                }
+                else if(30000<score){
+                rndInt_bot_y = Math.floor(Math.random() * 150)+520;
+                rndInt_bot_x = Math.floor(Math.random() * 50)+250;
+                rndInt_top_y = Math.floor(Math.random() * 30)+20;
+                rndInt_top_x = Math.floor(Math.random() * 100);
+                }
+                
+            }
+            if(x=>1648){
+                ctx.drawImage(background,x-2000,0); 
+            }
+            ctx.drawImage(hedgehog_top,x+rndInt_top_x,-rndInt_top_y);  
+            ctx.drawImage(hedgehog_bot,x+rndInt_bot_x,y+rndInt_bot_y); 
+            if(key==87){b-=1; }
+            if(key==83){b+=1;}  
+
+            if(b<=-50){
+                b=-b-98;
+            }
+            if(b>950){
+                b=b-1;
+            }
+
+            ctx.drawImage(green_tank,a,b);
+            
+            ctx.fillStyle = "white";
+
+            ctx.font = "40px Verdana";
+
+            ctx.fillText("Score : "+score,canvas.width/1.2,canvas.height-20);
+
+            if((a+green_tank.width==x+rndInt_top_x&&-rndInt_top_y+hedgehog_top.height+100>b+green_tank.height)||(a+green_tank.width==x+rndInt_bot_x&&y+rndInt_bot_y+100<b+green_tank.height)){ 
+                
+                explosion.play();
+                
+                function loop_exp1(){
+                setTimeout(function() {
+                    i++;
+                    if(i<10){
+                        ctx.drawImage(exp_1,a+30,b+40);
+                    }
+                },50)
+                }
+                loop_exp1();
+                function loop_exp2(){
+                setTimeout(function() {
+                    i++;
+                    if(i<10){
+                        ctx.drawImage(exp_2,a+40,b+50);
+                    }
+                },100)
+            }
+                loop_exp2();
+                function loop_exp3(){
+                setTimeout(function() {
+                    i++;
+                    if(i<10){
+                        ctx.drawImage(exp_3,a+40,b+50);
+                    }
+                },150)
+            }
+                loop_exp3();
+                function loop_exp4(){
+                setTimeout(function() {
+                    i++;
+                    if(i<10){
+                        ctx.drawImage(exp_4,a+10,b+10);
+                    }
+                },200)
+            }
+                loop_exp4();
+                function loop_exp5(){
+                setTimeout(function() {
+                    i++;
+                    if(i<10){
+                        ctx.drawImage(exp_5,a-10,b-10);
+                    }
+                },250)
+            }
+                loop_exp5();
+    
+                main_music.pause();
+                fail.play();
+                continueAnimating2=false;
+                
+            ctx.fillStyle = "darkred";
+
+            ctx.font = "100px Verdana";
+
+            ctx.fillText("GAME OVER",canvas.width/3,canvas.height/2);      
+            
+            }
+            
+            },1);
+            function controlTips(){
+            continueAnimating=false;
+            main_music.pause();
+            ctx.fillStyle = "white";
+            ctx.font = "40px Verdana"; 
+            ctx.fillText("W:UP",canvas.width/2,80);
+            ctx.fillText("S:DOWN",canvas.width/2,120);
+            ctx.fillText("Shift:STOP for right and left",canvas.width/2,160);
+            ctx.fillText("Play in fullscreen for a good experience(F11)",canvas.width/2,200);
+            ctx.fillText("Side impact is not active",canvas.width/2,240);
+            ctx.fillText("This game has 3 difficulty levels",canvas.width/2,280);
+            var m=0;
+            function clickControlButton(){
+                setTimeout(function() {
+                    m++;
+                    if(m<10){
+                        continueAnimating=true;
+                        main_music.play();
+                    }
+                },2000)
+            }
+            clickControlButton();
+            }
+            function musicPause(){
+                main_music.pause();
+            }
+        
+        }
+
+        </script>
+
+    </body>
+
+</html>
